@@ -13,21 +13,33 @@ import java.util.Scanner;
 public class Main {
  
     public static void main(String[] args) {
- 
-        Connection conn = null;
-        Scanner scanner = new Scanner(System.in);
- 
+
+        Connection conn = null; 
+
         try {
-            System.out.println("Enter JDBC URL:");
-            String dbURL = scanner.nextLine();
-            //scanner.nextLine(); //This is needed to pick up the new line
-            System.out.println("Enter username:");
+           
+            Scanner scanner = new Scanner(System.in);            
+            System.out.println("Enter hostname:");
+            String server = scanner.nextLine();
+            System.out.println("Enter port:");
+            int port = scanner.nextInt();
+            scanner.nextLine(); //This is needed to pick up the new line                       
+            System.out.println("Enter db name:");
+            String dbName = scanner.nextLine();
+            System.out.println("Enter user name:");
             String user=scanner.nextLine();
             System.out.println("Enter password:");
             String pass=scanner.nextLine();
-            /*String dbURL = "jdbc:sqlserver://localhost\\sqlexpress";
-            String user = "sa";
-            String pass = "secret";*/
+            scanner.close();
+            /* MS driver connection URL            
+
+            * String user = "sa";
+            * String pass = "secret";
+            * String connectionUrl = "jdbc:sqlserver://" + server + ":" + port +";databaseName=" 
+            * + dbName + ";user=" + user + ";password=" + pass;
+            conn = DriverManager.getConnection(connectionUrl);
+            */
+            String dbURL = "jdbc:jtds:sqlserver://" + server + ":" + port + "/" + dbName ;
             conn = DriverManager.getConnection(dbURL, user, pass);
             if (conn != null) {
                 DatabaseMetaData dm = (DatabaseMetaData) conn.getMetaData();
